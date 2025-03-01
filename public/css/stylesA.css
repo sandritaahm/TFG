@@ -1,0 +1,203 @@
+/* Configuración del body para centrar */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/fondoTFG.jpg'); /* Fondo de la página */
+    background-size: cover;
+    background-position: center;
+    margin: 0; /* Elimina márgenes por defecto */
+    height: 100vh; /* Asegura que el body ocupe toda la altura */
+    display: flex; /* Activa flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    overflow: hidden; /* Evita cualquier desbordamiento */
+}
+
+h1, h2 {
+    font-size: 2em;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    color: #FFEB3B; /* Título en amarillo pastel */
+    -webkit-text-stroke: 2px black; /* Borde negro de 2px */
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+    border-radius: 10px; /* Bordes redondeados alrededor del texto */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto hover para títulos */
+h1:hover, h2:hover {
+    transform: scale(1.05); /* Pequeño aumento de tamaño */
+}
+
+
+/* Contenedor principal */
+.content-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    padding: 20px 40px; /* Espaciado interno */
+    max-width: 800px; /* Ancho máximo del contenedor */
+    width: 90%; /* Para que sea responsivo en pantallas pequeñas */
+    text-align: center;
+}
+
+/* Títulos dentro del contenedor */
+.content-container h1 {
+    color: #ffcc00;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+#ficha-list-container {
+    display: flex;
+    flex-direction: column; /* Asegura que los botones estén en una columna */
+    gap: 10px; /* Espacio entre los botones */
+    align-items: center; /* Asegura que los botones se alineen al centro */
+}
+
+/* Botones de fichas */
+.ficha-button {
+    display: block; /* Asegura que cada botón sea un bloque (uno debajo del otro) */
+    width: 100%; /* Los botones ocuparán todo el ancho disponible */
+    max-width: 200px; /* Limita el ancho máximo de los botones */
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    background: linear-gradient(to right, #4fa3f7, #6cb8ff); /* Azul más claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px auto; /* Alinea los botones al centro */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ficha-button:hover, .response-button:hover {
+    background: linear-gradient(to right, #3a8be8, #5ea5ff); /* Azul más vibrante */
+    transform: scale(1.05); /* Pequeño efecto de agrandamiento */
+    color: white !important; /* Mantiene el color del texto blanco */
+} 
+.ficha-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.ficha-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+}
+
+.question {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.options {
+    margin: 10px 0;
+}
+
+.option {
+    margin: 5px 0;
+}
+
+.result-message {
+    margin-top: 10px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
+
+.response-button {
+    background: linear-gradient(to right, #4fa3f7, #6cb8ff); /* Azul más claro */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+.exit-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.exit-button:hover {
+    background-color: #e53935;
+}
+
+.question-image {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 10px 0;
+    display: block;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+button {
+    background-color: #4CAF50;
+    border-radius: 10px; /* Bordes redondeados suaves */
+    color: white;
+    border: none;
+    padding: 12px 25px; /* Tamaño moderado */
+    font-size: 16px; /* Texto un poco más grande */
+    margin: 8px;
+    cursor: pointer;
+    width: 180px; /* Un ancho adecuado */
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.ficha-button span {
+    display: inline-block;  /* Asegúrate de que el reloj se muestre junto al nombre */
+    margin-left: 10px; /* Espacio entre el nombre de la ficha y el reloj */
+    font-size: 1.5em; /* Ajuste del tamaño del reloj */
+    color: white; /* Color del reloj */
+    font-weight: bold; /* Negrita para hacer el reloj más visible */
+}
+
+
+

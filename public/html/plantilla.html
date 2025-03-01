@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Ficha Interactiva</title>
+    <link rel="stylesheet" href="../css/stylesP.css"> 
+</head>
+<body>
+    <div class="content-container">
+        <h1>Crear Ficha Interactiva</h1>
+        
+        <!-- Formulario para configurar la ficha -->
+        <form id="ficha-form">
+            <div>
+                <label for="ficha-name">Nombre de la Ficha:</label>
+                <input type="text" id="ficha-name" placeholder="Escribe el nombre de la ficha" required />
+            </div>
+
+            <div>
+                <label for="nivel">Seleccionar Nivel:</label>
+                <select id="nivel">
+                    <option value="Infantil">Infantil</option>
+                    <option value="Primaria">Primaria</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="enable-timer">¿Incluir temporizador?</label>
+                <input type="checkbox" id="enable-timer">
+            </div>
+
+            <button type="button" id="add-question">Añadir Pregunta</button>
+            <button type="submit">Guardar Ficha</button>
+            <button type="button" id="cancel-edit-button" style="display: none;">Cancelar Edición</button>
+        </form>
+
+        <!-- Contenedor de preguntas dinámicas -->
+        <div id="questions-container"></div>
+
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal" id="success-modal">
+            <h2>Ficha guardada correctamente</h2>
+            <p>La ficha se ha guardado con éxito. Ahora está lista para ser utilizada.</p>
+            <button id="close-modal">Cerrar</button>
+        </div>
+
+        <div class="button-container" id="ficha-buttons-container"></div>
+        
+        <!-- Botón corregido -->
+        <button type="button" class="exit-button" id="exit-button">Salir a Pantalla Principal</button>
+        <button type="button" id="save-changes-button" style="display: none;">Guardar Cambios</button>
+
+    </div>
+
+    <!-- Script cargado al final del body -->
+    <script src="../js/plantilla.js"></script>
+</body>
+</html>

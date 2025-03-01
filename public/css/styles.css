@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+
+/* Estilos comunes para todas las páginas */
+body {
+    background-image: url('../images/fondoTFG.jpg'); /* Fondo de la página */
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Asegura que el body ocupe toda la altura */
+    margin: 0; /* Elimina márgenes por defecto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Evita cualquier desbordamiento */
+}
+
+/* Contenedor común para formularios o secciones */
+.container {
+    background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    padding: 40px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Estilos para los botones contenedor */
+.button-container {
+    display: flex; /* Usar flexbox para alinear los botones horizontalmente */
+    justify-content: center; /* Centra los botones horizontalmente */
+    margin-top: 20px; /* Espacio superior para los botones */
+}
+h1, h2 {
+    font-size: 3.5em;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    color: #FFEB3B; /* Título en amarillo pastel */
+    -webkit-text-stroke: 2px black; /* Borde negro de 2px */
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+    border-radius: 10px; /* Bordes redondeados alrededor del texto */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto hover para títulos */
+h1:hover, h2:hover {
+    transform: scale(1.05); /* Pequeño aumento de tamaño */
+}
+/* Estilos para etiquetas y campos de entrada */
+label {
+    font-size: 1.5em;
+    display: block;
+    margin: 5px 0 5px;
+    position: relative;
+    top: -5px; /* Mueve el texto hacia arriba */
+}
+
+select, input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input::placeholder {
+    font-size: 1em; /* Cambia el tamaño del texto del placeholder */
+    color: #999; /* Cambia el color del placeholder */
+}
+
+/* Estilos para los botones */
+.boton {
+    display: block; /* Asegura que cada botón sea un bloque (uno debajo del otro) */
+    width: 100%; /* Los botones ocuparán todo el ancho disponible */
+    max-width: 200px; /* Limita el ancho máximo de los botones */
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    background: linear-gradient(to right, #4fa3f7, #6cb8ff); /* Azul más claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px auto; /* Alinea los botones al centro */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ficha-button:hover, .response-button:hover {
+    background: linear-gradient(to right, #3a8be8, #5ea5ff); /* Azul más vibrante */
+    transform: scale(1.1); /* Pequeño efecto de agrandamiento */
+    transition: transform 0.3s ease;
+    color: white !important; /* Mantiene el color del texto blanco */
+}
+
+/* Estilos para enlaces */
+p a {
+    font-size: 0.9em;
+    color: #003366;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para las flechas de navegación */
+.arrows img {
+    width: 50px;
+    height: auto;
+    margin: 0 10px;
+    position: relative; /* Permite ajustar con "top" */
+    top: 20px; 
+    cursor: pointer;
+    transition: transform 0.3s;
+    
+}
+
+.input-error {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 2px;
+}
+
+/* Asegura que el contenedor tenga un tamaño fijo */
+.password-container {
+    position: relative;
+    width: 100%;
+    height: 45px; /* Altura fija */
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.input-general {
+    width: 100%; /* Mantiene el ancho del campo completo */
+    height: 100%; /* Alinea con la altura del contenedor */
+    padding: 10px;
+    font-size: 1.2em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    
+}
+
+/* Estilo para el botón de mostrar/ocultar */
+.toggle-password {
+    position: absolute;
+    right: 10px; /* Espacio desde el borde derecho */
+    top: 50%; 
+    transform: translateY(-50%);
+    width: 60px; /* ANCHO FIJO del botón */
+    text-align: center; /* Centra el texto horizontalmente */
+    background: none; /* Sin fondo */
+    border: none; /* Sin bordes */
+    cursor: pointer;
+    color: #007bff; /* Color azul */
+    font-size: 0.9em; /* Tamaño del texto */
+    white-space: nowrap; /* Evita que el texto salte de línea */
+    overflow: hidden; /* Previene desbordamiento */
+    padding: 0; 
+}
+
+/* Estilos del Modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000; /* Encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.arrows img:hover {
+    transform: scale(1.1);
+}
+
+/* Media Queries para Responsividad */
+
+/* Ajustes para pantallas pequeñas (tablets en posición vertical y móviles grandes) */
+@media (max-width: 768px) {
+    h1, h2 {
+        font-size: 2em;
+    }
+    
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
+    
+    .button-container {
+        flex-direction: column; /* Alinea botones verticalmente en pantallas más pequeñas */
+    }
+    
+    .boton {
+        margin: 10px 0; /* Ajusta márgenes para botones en pantallas pequeñas */
+        width: 100%; /* Botones ocupan el ancho completo en pantallas pequeñas */
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas (teléfonos móviles) */
+@media (max-width: 480px) {
+    h1, h2 {
+        font-size: 1.5em;
+    }
+    
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .button-container {
+        flex-direction: column;
+    }
+    
+    .boton {
+        padding: 12px 20px; /* Ajusta tamaño del botón para pantallas muy pequeñas */
+        font-size: 1em;
+    }
+}
+
+
+/* Reset general para asegurar un estilo consistente */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general para el cuerpo */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+}
+
+/* Encabezado */
+header {
+    background-color: #007bff;
+    padding: 20px;
+    color: white;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+/* Estilos del contenedor principal */
+main {
+    padding: 30px;
+}
+
+/* Dashboard con fondo blanco */
+.dashboard {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección para subir la imagen */
+.upload-section {
+    margin-bottom: 20px;
+}
+
+.upload-section label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.upload-section input {
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Controles para los elementos interactivos */
+.controls {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    padding: 12px 25px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #0056b3;
+}
+
+/* Área para la imagen y los elementos */
+.interactive-area {
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: #f4f4f4;
+    border: 1px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    text-align: center;
+    color: #888;
+}
+
+/* Botón para guardar */
+.save-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.save-section button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-section button:hover {
+    background-color: #218838;
+}
+
+/* Estilo para los elementos arrastrables */
+.drag-element {
+    position: absolute;
+    cursor: move;
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Estilo para los campos de texto editables */
+.text-field {
+    position: absolute;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+}

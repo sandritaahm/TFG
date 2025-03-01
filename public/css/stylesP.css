@@ -1,0 +1,252 @@
+/* Configuración del body para centrar */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/fondoTFG.jpg'); /* Fondo de la página */
+    background-size: cover;
+    background-position: center;
+    margin: 0; /* Elimina márgenes por defecto */
+    height: 100vh; /* Asegura que el body ocupe toda la altura */
+    display: flex; /* Activa flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    overflow: hidden; /* Evita cualquier desbordamiento */
+}
+
+h1, h2 {
+    font-size: 3em;
+    color: #ffcc00; /* Color de los títulos */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra para el texto */
+    margin-bottom: 20px;
+}
+
+/* Contenedor principal */
+.content-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    padding: 20px 40px; /* Espaciado interno */
+    max-width: 800px; /* Ancho máximo del contenedor */
+    width: 90%; /* Para que sea responsivo en pantallas pequeñas */
+    text-align: center;
+}
+
+
+/* Títulos dentro del contenedor */
+.content-container h1 {
+    color: #ffcc00;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+/* Botones y otros elementos ya definidos previamente se mantienen igual */
+
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.modal h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #003366; /* Color azul oscuro */
+}
+
+.modal p {
+    margin: 15px 0;
+    color: #333;
+}
+
+.modal button {
+    background: linear-gradient(to right, #4fa3f7, #6cb8ff); /* Azul más claro */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal button:hover {
+    background-color: rgba(255, 255, 255, 1); /* Color más claro */
+    color: black; /* Cambia el color del texto */
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.option-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.option-container input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.exit-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.exit-button:hover {
+    background-color: #e53935;
+}
+
+.answer-correct-container {
+    display: none;
+    margin-top: 10px;
+}
+
+.answer-correct-container input[type="text"] {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#ficha-buttons-container {
+    display: flex;
+    flex-direction: column; /* Alinea los botones en columna */
+    gap: 10px; /* Añade un espacio de 10px entre los botones */
+    margin-top: 20px;
+}
+
+.ficha-button {
+    display: block; /* Asegura que cada botón sea un bloque (uno debajo del otro) */
+    width: 100%; /* Los botones ocuparán todo el ancho disponible */
+    max-width: 200px; /* Limita el ancho máximo de los botones */
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    background: linear-gradient(to right, #4fa3f7, #6cb8ff); /* Azul más claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px auto; /* Alinea los botones al centro */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ficha-button:hover, .response-button:hover {
+    background: linear-gradient(to right, #3a8be8, #5ea5ff); /* Azul más vibrante */
+    transform: scale(1.05); /* Pequeño efecto de agrandamiento */
+    color: white !important; /* Mantiene el color del texto blanco */
+}
+
+/* Botones de eliminar */
+.delete-button {
+    display: block; /* Asegura que el botón sea un bloque (uno debajo del otro) */
+    width: 100%; /* El botón ocupará todo el ancho disponible */
+    max-width: 200px; /* Limita el ancho máximo del botón */
+    padding: 10px; /* Igual al padding de .ficha-button */
+    font-size: 16px; /* Tamaño de fuente igual al de .ficha-button */
+    background-color: #f44336; /* Color de fondo rojo para el botón de delete */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px auto; /* Alinea el botón al centro */
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+.delete-button:hover {
+    background-color: #e53935;
+}
+
+#image-preview {
+    max-width: 150px; /* Limitar ancho máximo */
+    max-height: 150px; /* Limitar alto máximo */
+    object-fit: contain; /* Asegurar que la imagen se ajuste proporcionalmente */
+    border: 1px solid #ccc; /* Opcional: Añadir un borde para destacar */
+    border-radius: 5px; /* Opcional: Esquinas redondeadas */
+    padding: 5px; /* Opcional: Espacio alrededor */
+}
+
+
+/* Contenedor de los botones Editar y Eliminar */
+.ficha-buttons-group {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    justify-content: center; /* Centra los botones */
+}
+
+/* Botones de editar y eliminar más pequeños */
+.edit-button, .delete-button {
+    font-size: 14px; /* Tamaño de fuente más pequeño */
+    padding: 5px 10px; /* Reducción de padding */
+    max-width: 120px; /* Ancho máximo reducido */
+    width: auto; /* Asegura que el ancho se ajuste al contenido */
+    margin: 0; /* Sin márgenes adicionales */
+}
+
+.edit-button {
+    background-color: #4caf50; /* Color verde */
+}
+
+.delete-button {
+    background-color: #f44336; /* Color rojo */
+}
+
+
+#matching-container {
+    display: flex;
+    gap: 20px;
+}
+
+#matching-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#matching-container li {
+    margin-bottom: 10px;
+}
+
+#matching-container input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+

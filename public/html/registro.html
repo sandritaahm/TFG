@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Profesor</title>
+    <link rel="stylesheet" href="../css/styles.css"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Profesor</h1>
+        
+        <form id="registrationForm" action="/autores/registrar" method="POST">
+            <label for="registro-name">Nombre Completo:</label>
+            <input type="text" id="registro-name" name="nombre2" required placeholder="Nombre Usuario">
+            <div class="error-message" id="nameError"></div>
+        
+            <label for="registro-email">Correo Electrónico:</label>
+            <input type="email" id="registro-email" name="email2" required placeholder="ejemplo@gmail.com" class="input-general">
+            <div class="error-message" id="emailError"></div>
+        
+            <label for="registro-password">Contraseña:</label>
+            <div class="password-container">
+                <button type="button" id="toggleRegistroPassword" class="toggle-password">Mostrar</button>
+                <input type="password" id="registro-password" name="password2" required placeholder="********" class="input-general">
+            </div>
+            <div class="error-message" id="passwordError"></div>
+
+        
+            <button type="submit" id="registroButton" class="boton" disabled>Registrarse</button>
+        </form>
+
+        <div class="arrows">
+            <a href="login.html"><img src="../images/flecha izquierda.png" alt="Flecha Izquierda"></a>
+            <a href="plantilla.html"><img src="../images/flecha derecha.png" alt="Flecha Derecha"></a>
+        </div>
+    </div>
+
+    <!-- Scripts externos -->
+    <script src="../js/navegacion.js"></script>
+    <script src="../js/validacion.js"></script>
+    <script src="../js/registro.js"></script>
+</body>
+</html>
