@@ -57,33 +57,56 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // Función para agregar preguntas
-function addQuestion() {
+  function addQuestion() {
     const questionIndex = questions.length;
     const questionDiv = document.createElement("div");
-    questionDiv.classList.add("question");
+    questionDiv.classList.add("question-container");
 
     questionDiv.innerHTML = `
-        <hr>
-        <label>Pregunta ${questionIndex + 1}:</label>
-        <input type="text" class="question-text" placeholder="Escribe la pregunta" required>
+        <div class="question-header">
+            <button type="button" class="toggle-question">➕</button>
+            <label>Pregunta ${questionIndex + 1}</label>
+        </div>
+        <div class="question-content">
+            <hr>
+            <label>Pregunta:</label>
+            <input type="text" class="question-text" placeholder="Escribe la pregunta" required>
 
-        <label>Imagen (opcional):</label>
-        <input type="file" class="question-image-input" accept="image/*">
-        <div class="image-preview"></div>
+            <label>Imagen (opcional):</label>
+            <input type="file" class="question-image-input" accept="image/*">
+            <div class="image-preview"></div>
 
-        <label>Tipo de respuesta:</label>
-        <select class="answer-type">
-            <option value="" selected disabled>Selecciona un tipo</option>
-            <option value="text">Texto</option>
-            <option value="multiple-choice">Opción múltiple</option>
-            <option value="checkbox-multiple">checboxes</option>
-            <option value="range">Rango</option>
-        </select>
+            <label>Tipo de respuesta:</label>
+            <select class="answer-type">
+                <option value="" selected disabled>Selecciona un tipo</option>
+                <option value="text">Texto</option>
+                <option value="multiple-choice">Opción múltiple</option>
+                <option value="checkbox-multiple">Checkboxes</option>
+                <option value="range">Rango</option>
+            </select>
 
-        <div class="answer-container"></div>
+            <div class="answer-container"></div>
 
-        <button type="button" class="remove-question">Eliminar Pregunta</button>
+            <button type="button" class="remove-question">Eliminar Pregunta</button>
+        </div>
     `;
+
+    // Manejo de plegado/desplegado
+    const toggleButton = questionDiv.querySelector(".toggle-question");
+    const questionContent = questionDiv.querySelector(".question-content");
+
+    toggleButton.addEventListener("click", function () {
+        if (questionContent.style.display === "none") {
+            questionContent.style.display = "block";
+            toggleButton.textContent = "➖"; // Ícono para ocultar
+        } else {
+            questionContent.style.display = "none";
+            toggleButton.textContent = "➕"; // Ícono para mostrar
+        }
+    });
+
+    // Inicialmente ocultar el contenido de la pregunta
+    questionContent.style.display = "none";
 
     // Manejo de imagen
     const imageInput = questionDiv.querySelector(".question-image-input");
@@ -114,6 +137,7 @@ function addQuestion() {
     questionsContainer.appendChild(questionDiv);
     questions.push(questionDiv);
 }
+
 
 
 // Actualizamos la opción del select para que tenga "Checkboxes" en lugar de "Opción múltiple"
@@ -210,16 +234,17 @@ function saveFicha() {
         questions: []
     };
 
-    questions.forEach(questionDiv => {
-        const questionText = questionDiv.querySelector(".question-text").value;
-        const answerType = questionDiv.querySelector(".answer-type").value;
+    // Seleccionamos los contenedores de preguntas
+    document.querySelectorAll(".question-container").forEach((questionContainer) => {
+        const questionText = questionContainer.querySelector(".question-text").value;
+        const answerType = questionContainer.querySelector(".answer-type").value;
         let correctAnswer = null;
         let options = [];
         let correctAnswers = [];
         let questionImage = null;
 
         // Guardar imagen en Base64 si existe
-        const imageInput = questionDiv.querySelector(".question-image-input");
+        const imageInput = questionContainer.querySelector(".question-image-input");
         if (imageInput.files.length > 0) {
             const file = imageInput.files[0];
             const reader = new FileReader();
@@ -230,27 +255,24 @@ function saveFicha() {
         }
 
         if (answerType === "text") {
-            correctAnswer = questionDiv.querySelector(".correct-answer").value;
-        }if (answerType === "multiple-choice" || answerType === "checkbox-multiple") {
-            const optionInputs = questionDiv.querySelectorAll(".option-text");
-            const optionChoices = questionDiv.querySelectorAll(`input[type='${answerType === "multiple-choice" ? "radio" : "checkbox"}']`);
-        
+            correctAnswer = questionContainer.querySelector(".correct-answer").value;
+        } else if (answerType === "multiple-choice" || answerType === "checkbox-multiple") {
+            const optionInputs = questionContainer.querySelectorAll(".option-text");
+            const optionChoices = questionContainer.querySelectorAll(`input[type='${answerType === "multiple-choice" ? "radio" : "checkbox"}']`);
+
             optionInputs.forEach((input, index) => {
                 options.push(input.value);
                 if (optionChoices[index].checked) {
-                    correctAnswers.push(input.value); // Guarda las respuestas correctas para cada pregunta
+                    correctAnswers.push(input.value);
                 }
             });
-        
-            // Solo una respuesta correcta para opción múltiple
+
             if (answerType === "multiple-choice") {
                 correctAnswer = correctAnswers.length > 0 ? correctAnswers[0] : null;
             } else {
-                // En checkboxes, pueden haber varias respuestas correctas
                 correctAnswer = correctAnswers;
             }
         }
-        
 
         fichaData.questions.push({ questionText, answerType, options, correctAnswer, questionImage });
     });
@@ -258,16 +280,40 @@ function saveFicha() {
     let existingTemplates = JSON.parse(localStorage.getItem("savedTemplates")) || [];
 
     if (editingFichaIndex !== null) {
-        existingTemplates[editingFichaIndex] = fichaData; // Actualizar la ficha existente
+        existingTemplates[editingFichaIndex] = fichaData;
     } else {
-        existingTemplates.push(fichaData); // Guardar como nueva ficha
+        existingTemplates.push(fichaData);
     }
 
     localStorage.setItem("savedTemplates", JSON.stringify(existingTemplates));
 
     resetForm();
-    updateFichaButtons(); // Actualizar la vista de las fichas
+    updateFichaButtons();
 }
+
+// Agregar funcionalidad de mostrar y ocultar preguntas al cargar las preguntas guardadas
+document.querySelectorAll(".question-container").forEach((questionContainer) => {
+    const toggleButton = document.createElement("button");
+    toggleButton.textContent = "➕";
+    toggleButton.classList.add("toggle-question");
+
+    const questionHeader = questionContainer.querySelector(".question-header");
+    questionHeader.insertBefore(toggleButton, questionHeader.firstChild);
+
+    const questionContent = questionContainer.querySelector(".question-content");
+    questionContent.style.display = "none"; // Ocultar inicialmente
+
+    toggleButton.addEventListener("click", function () {
+        if (questionContent.style.display === "none") {
+            questionContent.style.display = "block";
+            toggleButton.textContent = "➖";
+        } else {
+            questionContent.style.display = "none";
+            toggleButton.textContent = "➕";
+        }
+    });
+});
+
 
 // Función para actualizar la ficha existente 
 function updateFicha() {
@@ -287,16 +333,15 @@ function updateFicha() {
         questions: []
     };
 
-    questions.forEach(questionDiv => {
-        const questionText = questionDiv.querySelector(".question-text").value;
-        const answerType = questionDiv.querySelector(".answer-type").value;
+    document.querySelectorAll(".question-container").forEach((questionContainer) => {
+        const questionText = questionContainer.querySelector(".question-text").value;
+        const answerType = questionContainer.querySelector(".answer-type").value;
         let correctAnswer = null;
         let options = [];
         let correctAnswers = [];
         let questionImage = null;
 
-        // Guardar imagen en Base64 si existe
-        const imageInput = questionDiv.querySelector(".question-image-input");
+        const imageInput = questionContainer.querySelector(".question-image-input");
         if (imageInput.files.length > 0) {
             const file = imageInput.files[0];
             const reader = new FileReader();
@@ -307,40 +352,59 @@ function updateFicha() {
         }
 
         if (answerType === "text") {
-            correctAnswer = questionDiv.querySelector(".correct-answer").value;
+            correctAnswer = questionContainer.querySelector(".correct-answer").value;
         } else if (answerType === "multiple-choice" || answerType === "checkbox-multiple") {
-            const optionInputs = questionDiv.querySelectorAll(".option-text");
-            const optionChoices = questionDiv.querySelectorAll(`input[type='${answerType === "multiple-choice" ? "radio" : "checkbox"}']`);
-        
+            const optionInputs = questionContainer.querySelectorAll(".option-text");
+            const optionChoices = questionContainer.querySelectorAll(`input[type='${answerType === "multiple-choice" ? "radio" : "checkbox"}']`);
+
             optionInputs.forEach((input, index) => {
                 options.push(input.value);
                 if (optionChoices[index].checked) {
-                    correctAnswers.push(input.value); // Guarda las respuestas correctas para cada pregunta
+                    correctAnswers.push(input.value);
                 }
             });
-        
-            // Solo una respuesta correcta para opción múltiple
+
             if (answerType === "multiple-choice") {
                 correctAnswer = correctAnswers.length > 0 ? correctAnswers[0] : null;
             } else {
-                // En checkboxes, pueden haber varias respuestas correctas
                 correctAnswer = correctAnswers;
             }
         }
-        
 
         fichaData.questions.push({ questionText, answerType, options, correctAnswer, questionImage });
     });
 
     let existingTemplates = JSON.parse(localStorage.getItem("savedTemplates")) || [];
-
-    existingTemplates[editingFichaIndex] = fichaData; // Actualizar la ficha existente
+    existingTemplates[editingFichaIndex] = fichaData;
 
     localStorage.setItem("savedTemplates", JSON.stringify(existingTemplates));
 
     resetForm();
-    updateFichaButtons(); // Actualizar la vista de las fichas
+    updateFichaButtons();
 }
+
+// Agregar funcionalidad de mostrar y ocultar preguntas al actualizar fichas
+document.querySelectorAll(".question-container").forEach((questionContainer) => {
+    const toggleButton = document.createElement("button");
+    toggleButton.textContent = "➕";
+    toggleButton.classList.add("toggle-question");
+
+    const questionHeader = questionContainer.querySelector(".question-header");
+    questionHeader.insertBefore(toggleButton, questionHeader.firstChild);
+
+    const questionContent = questionContainer.querySelector(".question-content");
+    questionContent.style.display = "none"; // Ocultar inicialmente
+
+    toggleButton.addEventListener("click", function () {
+        if (questionContent.style.display === "none") {
+            questionContent.style.display = "block";
+            toggleButton.textContent = "➖";
+        } else {
+            questionContent.style.display = "none";
+            toggleButton.textContent = "➕";
+        }
+    });
+});
 
 
     // Función para resetear el formulario
@@ -466,10 +530,34 @@ function updateFicha() {
     
         // Agregar las preguntas de la ficha al formulario
         fichaToEdit.questions.forEach((question, questionIndex) => {
-            const questionDiv = document.createElement("div");
-            questionDiv.classList.add("question");
+            // Crear el contenedor principal de la pregunta
+            const questionContainer = document.createElement("div");
+            questionContainer.classList.add("question-container");
     
-            questionDiv.innerHTML = `
+            // Crear el encabezado de la pregunta con el botón y el texto centrado
+            const questionHeader = document.createElement("div");
+            questionHeader.classList.add("question-header");
+    
+            // Botón para plegar/desplegar
+            const toggleButton = document.createElement("button");
+            toggleButton.textContent = "➕";
+            toggleButton.classList.add("toggle-question");
+    
+            // Texto de la pregunta centrado
+            const questionTitle = document.createElement("span");
+            questionTitle.classList.add("question-title");
+            questionTitle.textContent = `Pregunta ${questionIndex + 1}`;
+    
+            // Agregar elementos al encabezado
+            questionHeader.appendChild(toggleButton);
+            questionHeader.appendChild(questionTitle);
+    
+            // Contenedor de contenido de la pregunta
+            const questionContent = document.createElement("div");
+            questionContent.classList.add("question-content");
+            questionContent.style.display = "none"; // Ocultar inicialmente
+    
+            questionContent.innerHTML = `
                 <hr>
                 <label>Pregunta:</label>
                 <input type="text" class="question-text" placeholder="Escribe la pregunta" value="${question.questionText}" required>
@@ -490,9 +578,20 @@ function updateFicha() {
                 <button type="button" class="remove-question">Eliminar Pregunta</button>
             `;
     
+            // Funcionalidad para plegar/desplegar
+            toggleButton.addEventListener("click", function () {
+                if (questionContent.style.display === "none") {
+                    questionContent.style.display = "block";
+                    toggleButton.textContent = "➖";
+                } else {
+                    questionContent.style.display = "none";
+                    toggleButton.textContent = "➕";
+                }
+            });
+    
             // Manejo de imagen
-            const imageInput = questionDiv.querySelector(".question-image-input");
-            const imagePreview = questionDiv.querySelector(".image-preview");
+            const imageInput = questionContent.querySelector(".question-image-input");
+            const imagePreview = questionContent.querySelector(".image-preview");
     
             imageInput.addEventListener("change", function () {
                 const file = imageInput.files[0];
@@ -506,18 +605,17 @@ function updateFicha() {
             });
     
             // Actualizar contenedor de respuestas
-            updateAnswerContainer(questionDiv);
+            updateAnswerContainer(questionContent);
     
             // Si es de opción múltiple o selección múltiple, agregar las opciones
             if (question.answerType === "multiple-choice" || question.answerType === "checkbox-multiple") {
-                const answerContainer = questionDiv.querySelector(".answer-container");
+                const answerContainer = questionContent.querySelector(".answer-container");
                 const optionsContainer = document.createElement("div");
                 optionsContainer.classList.add("options-container");
     
                 question.options.forEach((option, optionIndex) => {
                     const optionDiv = document.createElement("div");
     
-                    // ✅ SE CORRIGE EL NAME PARA QUE SEA ÚNICO POR PREGUNTA
                     optionDiv.innerHTML = `
                         <input type="text" class="option-text" value="${option}" required>
                         <input type="${question.answerType === 'multiple-choice' ? 'radio' : 'checkbox'}"
@@ -540,25 +638,29 @@ function updateFicha() {
     
             // Si es una pregunta de rango, establecer el valor
             if (question.answerType === "range") {
-                questionDiv.querySelector(".range-answer").value = question.correctAnswer;
-                questionDiv.querySelector(".range-value").textContent = question.correctAnswer;
+                questionContent.querySelector(".range-answer").value = question.correctAnswer;
+                questionContent.querySelector(".range-value").textContent = question.correctAnswer;
             }
     
             // Eliminar pregunta
-            questionDiv.querySelector(".remove-question").addEventListener("click", function () {
-                questionsContainer.removeChild(questionDiv);
-                questions = questions.filter((_, i) => i !== questions.indexOf(questionDiv));
+            questionContent.querySelector(".remove-question").addEventListener("click", function () {
+                questionsContainer.removeChild(questionContainer);
+                questions = questions.filter((_, i) => i !== questions.indexOf(questionContent));
             });
     
-            questionsContainer.appendChild(questionDiv);
-            questions.push(questionDiv);
+            // Añadir el encabezado y contenido al contenedor de la pregunta
+            questionContainer.appendChild(questionHeader);
+            questionContainer.appendChild(questionContent);
+            questionsContainer.appendChild(questionContainer);
+            questions.push(questionContainer);
         });
     
         // Mostrar el botón de cancelar edición
         cancelEditButton.style.display = "inline-block";
     }
-      
-
+    
+    
+    
     // Inicializar la vista con las fichas guardadas
     updateFichaButtons();
 });
